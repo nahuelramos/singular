@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { InsuranceManagerService } from './services';
 
 @Component({
@@ -15,6 +15,14 @@ export class InsuranceManagerComponent implements OnInit {
     this.insuranceService.getInsuranceData().subscribe((insuranceData: any) => {
         this.insuranceData = insuranceData;
     });
+  }
+
+  applyFilters(values: any) {
+    this.insuranceData = this.insuranceService.applyFilters(values);
+  }
+
+  resetFilters() {
+    this.insuranceData = this.insuranceService.resetFilters();
   }
 
 }

@@ -305,8 +305,31 @@ export class InsuranceManagerService {
 
     getInsuranceData() {
         this.insuranceData = data;
+        
         return of(this.insuranceData);
     }
 
+    applyFilters(filters: any) {
+      this.insuranceData = this.multiFilter(data, filters);
 
+      return this.insuranceData;
+    }
+
+    resetFilters() {
+      this.insuranceData = data;
+
+      return this.insuranceData;
+    }
+
+    private multiFilter(insuranceData: any[], filters: any) {
+      return insuranceData.filter((insuranceElement: any) => {
+        for (let filter in filters) {
+          if (!insuranceElement || !filters[filter] || insuranceElement[filter].indexOf(filters[filter]) < 0) {
+            continue;
+          }
+
+          return true;
+        }
+      })
+    }
 }

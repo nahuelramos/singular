@@ -1,5 +1,5 @@
 <div class="example-container">
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="example-container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup)" class="example-container">
 
     <mat-form-field hintLabel="Max 30 characters">
       <input formControlName="name" matInput #input maxlength="30" placeholder="Product name">
@@ -17,10 +17,11 @@
     </mat-form-field>
 
     <mat-form-field hintLabel="Max 4 characters">
-      <input formControlName="price" matInput #input maxlength="4" placeholder="Price">
+      <input formControlName="price" matInput #input maxlength="10" placeholder="Price">
       <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
     </mat-form-field>
 
     <button type="submit" mat-button>Apply filters</button>
   </form>
+  <button type="button" mat-button (click)="resetFiltesr()">Reset filters</button>
 </div>

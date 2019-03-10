@@ -1,2 +1,3 @@
-<app-filter></app-filter>
-<app-table [insuranceData]="insuranceData"></app-table>
+<app-filter (filterApplied)="applyFilters($event)" (resetFilters)="resetFilters()"></app-filter>
+<app-table [insuranceData]="insuranceData">
+</app-table>
