@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -16,6 +17,7 @@ import { InsuranceManagerService } from './services';
   exports: [InsuranceManagerComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatSortModule,
     MatTableModule,
     MatButtonModule,

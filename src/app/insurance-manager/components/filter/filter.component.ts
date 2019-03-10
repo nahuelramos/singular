@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,14 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
+  formGroup: FormGroup;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder) {
   }
 
-  applyFilters() {
-    console.log('clicked');
+  ngOnInit() {
+    this.formGroup = this.formBuilder.group({
+      'name': [null, [Validators.maxLength(10)]],
+      'brand': [null, Validators.maxLength(10)],
+      'kind': [null, [Validators.maxLength(10)]],
+      'price': [null, [Validators.maxLength(10), Validators.pattern("\d*")]]
+    });
+  }
+
+  onSubmit(form: FormGroup) {
+    console.log('clicked', form);
   }
 
 }
