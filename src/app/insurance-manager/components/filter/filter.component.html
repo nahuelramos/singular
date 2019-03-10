@@ -1,0 +1,23 @@
+<div class="example-container">
+  <mat-form-field hintLabel="Max 20 characters">
+    <input matInput #input maxlength="20" placeholder="Product name">
+    <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="Max 20 characters">
+    <input matInput #input maxlength="20" placeholder="Insurance company">
+    <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="Max 20 characters">
+    <input matInput #input maxlength="20" placeholder="Policy kind">
+    <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="Max 20 characters">
+    <input matInput #input maxlength="20" placeholder="Price">
+    <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+  </mat-form-field>
+
+  <button mat-button (click)="applyFilters()">Apply filters</button>
+</div>
