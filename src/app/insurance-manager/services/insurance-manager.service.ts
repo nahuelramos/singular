@@ -324,7 +324,7 @@ export class InsuranceManagerService {
     private multiFilter(insuranceData: any[], filters: any) {
       return insuranceData.filter((insuranceElement: any) => {
         for (let filter in filters) {
-          if (!insuranceElement || !filters[filter] || insuranceElement[filter].indexOf(filters[filter]) < 0) {
+          if (!insuranceElement || !filters[filter] || insuranceElement[filter].toLowerCase().indexOf(filters[filter].toLowerCase()) < 0) {
             continue;
           }
 
