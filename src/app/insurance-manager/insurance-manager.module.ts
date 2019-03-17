@@ -7,14 +7,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { InsuranceManagerComponent } from './insurance-manager.component';
 import { FilterComponent, TableComponent } from './components';
 import { InsuranceManagerService } from './services';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
-  declarations: [InsuranceManagerComponent, TableComponent, FilterComponent],
+  declarations: [InsuranceManagerComponent, TableComponent, FilterComponent, ModalComponent],
   exports: [InsuranceManagerComponent],
+  entryComponents: [ModalComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,7 +25,8 @@ import { InsuranceManagerService } from './services';
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [InsuranceManagerService]
 })

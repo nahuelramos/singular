@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, DoCheck, IterableDiffers } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { Insurance } from '../../models/insurance.model';
 
 @Component({
   selector: 'app-table',
@@ -9,10 +10,10 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class TableComponent implements OnInit, DoCheck {  
 
   displayedColumns: string[];
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<Insurance>;
   iterableDiffer: any;
 
-  @Input() insuranceData: any;
+  @Input() insuranceData: MatTableDataSource<Insurance>;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -21,15 +22,20 @@ export class TableComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['name', 'brand', 'kind', 'price'];
-    this.dataSource = new MatTableDataSource(this.insuranceData);
+    this.displayedColumns = ['name', 'brand', 'kind', 'price', 'favorite'];
+    this.dataSource = this.insuranceData;
     this.dataSource.sort = this.sort;
   }
 
   ngDoCheck() {
-    const changes = this.iterableDiffer.diff(this.insuranceData);
+    const changes = this.iterableDiffer.diff(this.insuranceData.data);
     if (changes) {
-        this.dataSource = new MatTableDataSource(this.insuranceData);
+        this.dataSource = this.insuranceData;
+        this.dataSource.sort = this.sort;
     }
+  }
+
+  setFavorite(element: Insurance) {
+    element.isFavorite ? element.isFavorite = false : element.isFavorite = true;
   }
 }

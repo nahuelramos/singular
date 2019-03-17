@@ -1,4 +1,6 @@
 import { of } from 'rxjs';
+import { MatTableDataSource } from '@angular/material';
+import { Insurance } from '../models/insurance.model';
 
 const data = [
     {
@@ -301,27 +303,36 @@ const data = [
   ];
 
 export class InsuranceManagerService {
-    private insuranceData: any[];
+    private insuranceData: MatTableDataSource<Insurance>;
+    private insuranceFavoritesData: MatTableDataSource<Insurance>;
 
     getInsuranceData() {
-        this.insuranceData = data;
+        this.insuranceData = new MatTableDataSource(data);
         
         return of(this.insuranceData);
     }
 
     applyFilters(filters: any) {
-      this.insuranceData = this.multiFilter(data, filters);
+      this.insuranceData = new MatTableDataSource(this.multiFilter(data, filters));
 
       return this.insuranceData;
     }
 
     resetFilters() {
-      this.insuranceData = data;
+      this.insuranceData = new MatTableDataSource(data);
 
       return this.insuranceData;
     }
 
-    private multiFilter(insuranceData: any[], filters: any) {
+    getFavorites() {
+      this.insuranceFavoritesData = new MatTableDataSource(this.insuranceData.data.filter((insurance: Insurance) => {
+        return insurance.isFavorite;
+      }));
+
+      return this.insuranceFavoritesData;
+    }
+
+    private multiFilter(insuranceData: Insurance[], filters: any) {
       return insuranceData.filter((insuranceElement: any) => {
         for (let filter in filters) {
           if (!insuranceElement || !filters[filter] || insuranceElement[filter].toLowerCase().indexOf(filters[filter].toLowerCase()) < 0) {
