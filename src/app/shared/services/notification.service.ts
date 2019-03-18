@@ -10,14 +10,14 @@ export class NotificationService {
   constructor(private toastr: ToastrService) { }
   
   showSuccess(text: string = ':)') {
-    this.toastr.success('Success!', text);
+    this.toastr.success(text, 'Success!');
   }
 
   showError(text: string = ':(') {
-    this.toastr.error('Oops!', text);
+    this.toastr.error(text, 'Oops!');
   }
 
   showWaring(text: string = ':|') {
-    this.toastr.warning('Warning', text);
+    this.toastr.warning(text, 'Warning');
   }
 }

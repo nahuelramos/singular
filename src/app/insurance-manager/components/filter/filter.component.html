@@ -16,7 +16,7 @@
       <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
     </mat-form-field>
 
-    <mat-form-field hintLabel="Max 4 characters">
+    <mat-form-field hintLabel="Max 4 characters" *ngIf="showPrice">
       <input formControlName="price" matInput #input maxlength="10" placeholder="Price">
       <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
     </mat-form-field>

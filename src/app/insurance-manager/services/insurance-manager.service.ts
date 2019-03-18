@@ -332,6 +332,26 @@ export class InsuranceManagerService {
       return this.insuranceFavoritesData;
     }
 
+    applyFavoriteFilters(filters: any) {
+      this.insuranceFavoritesData = new MatTableDataSource(this.multiFilter(data, filters));
+
+      return this.insuranceFavoritesData;
+    }
+
+    resetFavoriteFilters() {
+      this.insuranceFavoritesData = this.getFavorites();
+
+      return this.insuranceFavoritesData;
+    }
+
+    removeFavorite(favoriteToRemove: Insurance) {
+      this.insuranceFavoritesData = new MatTableDataSource(this.insuranceFavoritesData.data.filter((favorite: Insurance) => {
+        return favorite !== favoriteToRemove;
+      }));
+
+      return this.insuranceFavoritesData;
+    }
+
     private multiFilter(insuranceData: Insurance[], filters: any) {
       return insuranceData.filter((insuranceElement: any) => {
         for (let filter in filters) {

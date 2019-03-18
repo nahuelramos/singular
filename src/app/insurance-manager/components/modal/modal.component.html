@@ -1,10 +1,9 @@
 <h1 mat-dialog-title>Favorites</h1>
 <div mat-dialog-content>
-    <app-filter (filterApplied)="applyFilters($event)" (resetFilters)="resetFilters()"></app-filter>
-    <app-table [insuranceData]="data">
+    <app-filter [showPrice]="showPrice" (filterApplied)="applyFilters($event)" (resetFilters)="resetFilters()"></app-filter>
+    <app-table [insuranceData]="favorites" [displayedColumns]="displayedColumns" (favoriteRemoved)="favoriteRemoved($event)">
       </app-table>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="closeModal()">Close</button>
 </div>

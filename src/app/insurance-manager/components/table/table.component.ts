@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, DoCheck, IterableDiffers } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, DoCheck, IterableDiffers, Output, EventEmitter } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Insurance } from '../../models/insurance.model';
 
@@ -9,11 +9,13 @@ import { Insurance } from '../../models/insurance.model';
 })
 export class TableComponent implements OnInit, DoCheck {  
 
-  displayedColumns: string[];
   dataSource: MatTableDataSource<Insurance>;
   iterableDiffer: any;
-
+  
+  @Input() displayedColumns: string[] = ['logo', 'name', 'brand', 'kind', 'price', 'favorite'];
   @Input() insuranceData: MatTableDataSource<Insurance>;
+
+  @Output() favoriteRemoved: EventEmitter<Insurance>  = new EventEmitter<Insurance>();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -22,7 +24,6 @@ export class TableComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['name', 'brand', 'kind', 'price', 'favorite'];
     this.dataSource = this.insuranceData;
     this.dataSource.sort = this.sort;
   }
@@ -37,5 +38,9 @@ export class TableComponent implements OnInit, DoCheck {
 
   setFavorite(element: Insurance) {
     element.isFavorite ? element.isFavorite = false : element.isFavorite = true;
+
+    if (!element.isFavorite) {
+      this.favoriteRemoved.emit(element);
+    }
   }
 }

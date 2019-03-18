@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { InsuranceManagerService } from '../../services';
+import { Insurance } from '../../models/insurance.model';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-modal',
@@ -9,24 +11,37 @@ import { InsuranceManagerService } from '../../services';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
+  displayedColumns: string[];
+  showPrice: boolean ;
 
   constructor(public dialogRef: MatDialogRef<ModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private insuranceService: InsuranceManagerService) { }
+    @Inject(MAT_DIALOG_DATA) public favorites: any, private insuranceService: InsuranceManagerService,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
-    console.log(this.data);
+    this.displayedColumns = ['logo', 'name', 'brand', 'kind', 'favorite'];
+    this.showPrice = false;
   }
 
-  onNoClick(): void {
+  closeModal() {
     this.dialogRef.close();
   }
 
   applyFilters(values: any) {
-    this.data = this.insuranceService.applyFilters(values);
+    this.favorites = this.insuranceService.applyFavoriteFilters(values);
   }
 
   resetFilters() {
-    this.data = this.insuranceService.resetFilters();
+    this.favorites = this.insuranceService.resetFavoriteFilters();
+  }
+
+  favoriteRemoved(favorite: Insurance) {
+    this.favorites = this.insuranceService.removeFavorite(favorite);
+    
+    if (this.favorites.data.length === 0) {
+      this.notificationService.showWaring('There is not favorites to show :(');
+      this.closeModal();
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
@@ -11,6 +11,8 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 export class FilterComponent implements OnInit {
   formGroup: FormGroup;
 
+  @Input() showPrice: boolean = true;
+
   @Output() filterApplied = new EventEmitter<any>();
   @Output() resetFilters = new EventEmitter<any>();
 
@@ -21,9 +23,12 @@ export class FilterComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       'name': [null, [Validators.maxLength(30)]],
       'brand': [null, Validators.maxLength(30)],
-      'kind': [null, [Validators.maxLength(30)]],
-      'price': [null, [Validators.maxLength(10), Validators.pattern("^[0-9]*$")]]
+      'kind': [null, [Validators.maxLength(30)]]
     });
+
+    if (this.showPrice) {
+      this.formGroup.addControl('price', new FormControl('', [Validators.maxLength(10), Validators.pattern("^[0-9]*$")]))
+    }
   }
 
   onSubmit(form: FormGroup) {
