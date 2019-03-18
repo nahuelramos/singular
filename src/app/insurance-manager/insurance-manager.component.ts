@@ -12,13 +12,19 @@ import { NotificationService } from '../shared/services/notification.service';
 })
 export class InsuranceManagerComponent implements OnInit {
   insuranceData: any;
+  pageSize: number;
+  pageIndex: number;
+  previousPageIndex: number;
+  totalPages: number;
 
   constructor(private insuranceService: InsuranceManagerService, public dialog: MatDialog, private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.insuranceService.getInsuranceData().subscribe((insuranceData: any) => {
-        this.insuranceData = insuranceData;
-    });
+    this.pageSize = 5;
+    this.pageIndex = 1;
+    this.previousPageIndex = 1;
+    this.totalPages = this.insuranceService.getTotalPages();
+    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize, this.previousPageIndex);
   }
 
   applyFilters(values: any) {
@@ -27,6 +33,14 @@ export class InsuranceManagerComponent implements OnInit {
 
   resetFilters() {
     this.insuranceData = this.insuranceService.resetFilters();
+  }
+
+  pageChange($event) {
+    this.pageSize = $event.pageSize;
+    this.pageIndex = $event.pageIndex;
+    this.previousPageIndex = $event.previousPageIndex;
+
+    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize, this.previousPageIndex);
   }
 
   showFavorites() {

@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { InsuranceManagerComponent } from './insurance-manager.component';
 import { FilterComponent, TableComponent } from './components';
@@ -26,7 +27,8 @@ import { ModalComponent } from './components/modal/modal.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   providers: [InsuranceManagerService]
 })
