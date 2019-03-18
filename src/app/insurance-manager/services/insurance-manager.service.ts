@@ -310,7 +310,7 @@ export class InsuranceManagerService {
     return data.length;
   }
 
-  getInsuranceData(actualPage: number, size: number, previousPageIndex: number) {
+  getInsuranceData(actualPage: number, size: number) {
     const index = this.getStartAndEndIndex(actualPage, size);
 
     return new MatTableDataSource(this.insuranceData.data.slice(index.startIndex, index.endIndex));
@@ -319,7 +319,7 @@ export class InsuranceManagerService {
   private getStartAndEndIndex(actualPage: number, size: number) {
       const page = actualPage + 1;
       return {
-        startIndex: (page * size) - size,
+        startIndex: (actualPage * size),
         endIndex: page * size
       }
   }

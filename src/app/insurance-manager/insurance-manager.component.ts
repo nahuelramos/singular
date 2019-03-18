@@ -14,17 +14,15 @@ export class InsuranceManagerComponent implements OnInit {
   insuranceData: any;
   pageSize: number;
   pageIndex: number;
-  previousPageIndex: number;
   totalPages: number;
 
   constructor(private insuranceService: InsuranceManagerService, public dialog: MatDialog, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.pageSize = 5;
-    this.pageIndex = 1;
-    this.previousPageIndex = 1;
+    this.pageIndex = 0;
     this.totalPages = this.insuranceService.getTotalPages();
-    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize, this.previousPageIndex);
+    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize);
   }
 
   applyFilters(values: any) {
@@ -38,9 +36,8 @@ export class InsuranceManagerComponent implements OnInit {
   pageChange($event) {
     this.pageSize = $event.pageSize;
     this.pageIndex = $event.pageIndex;
-    this.previousPageIndex = $event.previousPageIndex;
 
-    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize, this.previousPageIndex);
+    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize);
   }
 
   showFavorites() {
