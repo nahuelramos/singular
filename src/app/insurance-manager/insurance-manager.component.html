@@ -2,8 +2,8 @@
 <app-filter (filterApplied)="applyFilters($event)" (resetFilters)="resetFilters()"></app-filter>
 <app-table [insuranceData]="insuranceData">
 </app-table>
-<mat-paginator [length]="totalPages"
-              [pageSize]="pageSize"
+<mat-paginator #paginator [length]="paginatorInfo.totalPages"
+              [pageSize]="paginatorInfo.pageSize"
               [pageSizeOptions]="[5, 10]"
               (page)="pageChange($event)">
 </mat-paginator>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InsuranceManagerService } from './services';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { ModalComponent } from './components/modal/modal.component';
 import { NotificationService } from '../shared/services/notification.service';
+import { Paginator } from './models/paginator.model';
 
 @Component({
   selector: 'app-insurance-manager',
@@ -11,33 +12,35 @@ import { NotificationService } from '../shared/services/notification.service';
   entryComponents: [ModalComponent]
 })
 export class InsuranceManagerComponent implements OnInit {
-  insuranceData: any;
-  pageSize: number;
-  pageIndex: number;
-  totalPages: number;
+  insuranceData: any;  
+  paginatorInfo: Paginator;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private insuranceService: InsuranceManagerService, public dialog: MatDialog, private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.pageSize = 5;
-    this.pageIndex = 0;
-    this.totalPages = this.insuranceService.getTotalPages();
-    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize);
+    this.paginatorInfo = this.insuranceService.getPaginatorInfo();
+    this.insuranceData = this.insuranceService.getInsuranceData(this.paginatorInfo);
   }
 
   applyFilters(values: any) {
     this.insuranceData = this.insuranceService.applyFilters(values);
+    this.paginator.firstPage();
+    this.notificationService.showSuccess('filters applied! :)');
   }
 
   resetFilters() {
     this.insuranceData = this.insuranceService.resetFilters();
+    this.paginator.firstPage();
+    this.notificationService.showSuccess('filters rested! :)');
   }
 
   pageChange($event) {
-    this.pageSize = $event.pageSize;
-    this.pageIndex = $event.pageIndex;
+    this.paginatorInfo.pageSize = $event.pageSize;
+    this.paginatorInfo.pageIndex = $event.pageIndex;
 
-    this.insuranceData = this.insuranceService.getInsuranceData(this.pageIndex, this.pageSize);
+    this.insuranceData = this.insuranceService.getInsuranceData(this.paginatorInfo);
   }
 
   showFavorites() {

@@ -1,6 +1,7 @@
 import { MatTableDataSource } from '@angular/material';
 
 import { Insurance } from '../models/insurance.model';
+import { Paginator } from '../models/paginator.model';
 
 const data = [
   {
@@ -305,35 +306,53 @@ const data = [
 export class InsuranceManagerService {
   private insuranceData: MatTableDataSource<Insurance> = new MatTableDataSource(data);
   private insuranceFavoritesData: MatTableDataSource<Insurance>;
+  private paginator: Paginator;
 
-  getTotalPages() {
-    return data.length;
+  constructor() {
+    this.paginator = new Paginator();
+    this.setInitPaginator();
+    this.insuranceData = new MatTableDataSource(data);
   }
 
-  getInsuranceData(actualPage: number, size: number) {
-    const index = this.getStartAndEndIndex(actualPage, size);
+  getPaginatorInfo() {
+    return this.paginator;
+  }
+
+  setInitPaginator() {
+    this.paginator.pageSize = 5;
+    this.paginator.totalPages = data.length;
+    this.paginator.pageIndex = 0;
+  }
+
+  getInsuranceData(paginatorInfo: Paginator) {
+    this.paginator = paginatorInfo;
+
+    return this.paginateData();
+  }
+
+  resetData() {
+    this.insuranceData = new MatTableDataSource(data);
+  }
+
+  paginateData(): MatTableDataSource<Insurance> {
+    const index = this.getStartAndEndIndex();
 
     return new MatTableDataSource(this.insuranceData.data.slice(index.startIndex, index.endIndex));
   }
 
-  private getStartAndEndIndex(actualPage: number, size: number) {
-      const page = actualPage + 1;
-      return {
-        startIndex: (actualPage * size),
-        endIndex: page * size
-      }
-  }
-
   applyFilters(filters: any) {
     this.insuranceData = new MatTableDataSource(this.multiFilter(data, filters));
+    this.assignTotalPages(this.insuranceData.data.length);
 
-    return this.insuranceData;
+    return this.paginateData();
   }
 
   resetFilters() {
-    this.insuranceData = new MatTableDataSource(data);
+    this.resetData();
+    this.setInitPaginator();
+    this.insuranceData = new MatTableDataSource(data)
 
-    return this.insuranceData;
+    return this.paginateData();
   }
 
   getFavorites() {
@@ -362,6 +381,19 @@ export class InsuranceManagerService {
     }));
 
     return this.insuranceFavoritesData;
+  }  
+
+  private assignTotalPages(totalPages: number) {
+    this.paginator.totalPages = totalPages;
+  }
+
+
+  private getStartAndEndIndex() {
+    const page = this.paginator.pageIndex + 1;
+    return {
+      startIndex: (this.paginator.pageIndex * this.paginator.pageSize),
+      endIndex: page * this.paginator.pageSize
+    }
   }
 
   private multiFilter(insuranceData: Insurance[], filters: any) {
