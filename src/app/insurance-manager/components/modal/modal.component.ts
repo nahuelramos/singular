@@ -29,10 +29,12 @@ export class ModalComponent implements OnInit {
 
   applyFilters(values: any) {
     this.favorites = this.insuranceService.applyFavoriteFilters(values);
+    this.notificationService.showSuccess('filters applied! :)');
   }
 
   resetFilters() {
     this.favorites = this.insuranceService.resetFavoriteFilters();
+    this.notificationService.showSuccess('filters rested! :)');
   }
 
   favoriteRemoved(favorite: Insurance) {

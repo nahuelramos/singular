@@ -364,9 +364,7 @@ export class InsuranceManagerService {
   }
 
   applyFavoriteFilters(filters: any) {
-    this.insuranceFavoritesData = new MatTableDataSource(this.multiFilter(data, filters));
-
-    return this.insuranceFavoritesData;
+    return new MatTableDataSource(this.multiFilter(this.insuranceFavoritesData.data, filters));
   }
 
   resetFavoriteFilters() {

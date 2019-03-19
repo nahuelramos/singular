@@ -1,5 +1,5 @@
-<button (click)="showFavorites()">Show favorites</button>
 <app-filter (filterApplied)="applyFilters($event)" (resetFilters)="resetFilters()"></app-filter>
+<button mat-button (click)="showFavorites()">Show favorites</button>
 <app-table [insuranceData]="insuranceData">
 </app-table>
 <mat-paginator #paginator [length]="paginatorInfo.totalPages"
