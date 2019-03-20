@@ -27,13 +27,13 @@ export class FilterComponent implements OnInit {
     });
 
     if (this.showPrice) {
-      this.formGroup.addControl('price', new FormControl('', [Validators.maxLength(10), Validators.pattern("^[0-9]*$")]))
+      this.formGroup.addControl('price', new FormControl('', [Validators.maxLength(10), Validators.pattern("^[0-9]*$")]));
     }
   }
 
   onSubmit(form: FormGroup) {
     const isEmpty = Object.values(form.value).every(x => (x === null || x === ''));
-    
+
     if (isEmpty) {
       this.notificationService.showWaring('At least one filter must be complete');
       return;

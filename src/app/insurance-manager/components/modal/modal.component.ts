@@ -39,7 +39,7 @@ export class ModalComponent implements OnInit {
 
   favoriteRemoved(favorite: Insurance) {
     this.favorites = this.insuranceService.removeFavorite(favorite);
-    
+
     if (this.favorites.data.length === 0) {
       this.notificationService.showWaring('There is not favorites to show :(');
       this.closeModal();
