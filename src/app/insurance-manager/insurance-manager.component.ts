@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { InsuranceManagerService } from './services';
 import { MatDialog, MatPaginator } from '@angular/material';
 import { ModalComponent } from './components/modal/modal.component';
-import { NotificationService } from '../shared/services/notification.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { Paginator } from './models/paginator.model';
 
 @Component({
@@ -12,12 +12,13 @@ import { Paginator } from './models/paginator.model';
   entryComponents: [ModalComponent]
 })
 export class InsuranceManagerComponent implements OnInit {
-  insuranceData: any;  
+  insuranceData: any;
   paginatorInfo: Paginator;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private insuranceService: InsuranceManagerService, public dialog: MatDialog, private notificationService: NotificationService) { }
+  constructor(private insuranceService: InsuranceManagerService, public dialog: MatDialog,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.paginatorInfo = this.insuranceService.getPaginatorInfo();

@@ -350,7 +350,7 @@ export class InsuranceManagerService {
   resetFilters() {
     this.resetData();
     this.setInitPaginator();
-    this.insuranceData = new MatTableDataSource(data)
+    this.insuranceData = new MatTableDataSource(data);
 
     return this.paginateData();
   }
@@ -379,7 +379,7 @@ export class InsuranceManagerService {
     }));
 
     return this.insuranceFavoritesData;
-  }  
+  }
 
   private assignTotalPages(totalPages: number) {
     this.paginator.totalPages = totalPages;
@@ -391,7 +391,7 @@ export class InsuranceManagerService {
     return {
       startIndex: (this.paginator.pageIndex * this.paginator.pageSize),
       endIndex: page * this.paginator.pageSize
-    }
+    };
   }
 
   private multiFilter(insuranceData: Insurance[], filters: any) {
@@ -403,6 +403,6 @@ export class InsuranceManagerService {
 
         return true;
       }
-    })
+    });
   }
 }
